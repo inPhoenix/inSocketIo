@@ -2,5 +2,12 @@
   "name": "inSocketIo",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "dependencies": {
+    "prettier": "^1.15.2"
+  }
 }
