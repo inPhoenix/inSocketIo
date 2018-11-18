@@ -9,5 +9,6 @@
 ## The stack
 - [x] NodeJs
 - [x] ExpressJs
-- [x] SocketIo
+- [x] [SocketIo](https://socket.io/)
+
 
