@@ -1,0 +1,10 @@
+{
+  "name": "nativeWs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "ws": "^6.1.2"
+  }
+}
