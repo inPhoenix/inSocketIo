@@ -9,18 +9,40 @@ socket.on('connect', () => {
 
 socket.on('nsLint', nsData => {
   let namespaceDiv = document.querySelector('.namespaces')
-  namespaceDiv.innerHTML= ""
-  nsData.forEach((ns) => {
-    namespaceDiv.innerHTML += `<div class="namespace" ns=${ns.endpoint}><img src="${ns.img}"/></div>`
+  namespaceDiv.innerHTML = ''
+  nsData.forEach(ns => {
+    namespaceDiv.innerHTML += `<div class="namespace" ns=${
+      ns.endpoint
+    }><img src="${ns.img}"/></div>`
   })
-  Array.from(document.getElementsByClassName('namespace')).forEach((elem) => {
-    elem.addEventListener('click', (e) => {
-        const nsEndpoint = elem.getAttribute('ns')
-        console.log('%c endpoint', 'background: white; color: red', nsEndpoint )
+  Array.from(document.getElementsByClassName('namespace')).forEach(elem => {
+    elem.addEventListener('click', e => {
+      const nsEndpoint = elem.getAttribute('ns')
+      console.log('%c endpoint', 'background: white; color: red', nsEndpoint)
+    })
+  })
+  const nsSocket = io('http://localhost:9000/wiki')
+  nsSocket.on('nsRoomLoad', nsRooms => {
+    let roomList = document.querySelector('.room-list')
+    roomList.innerHTML = ''
+    nsRooms.forEach(room => {
+      let glyph
+      if(room.privateRoom){
+        glyph = 'lock'
+      } else {
+        glyph = 'globe'
+      }
+      roomList.innerHTML += `<li class="room"><span class="glyphicon glyphicon-${glyph}"></span>${room.roomTitle}</li>`
+    })
+    // add click listener
+    let roomNodes = document.getElementsByClassName('room')
+    Array.from(roomNodes).forEach((elem) => {
+      elem.addEventListener('click', (e) => {
+        console.log('clicked', e.target.innerText)
+      })
     })
   })
 })
-
 
 socket.on('messageFromServer', dataFromServer => {
   console.log(dataFromServer)
