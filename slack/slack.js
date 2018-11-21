@@ -10,25 +10,14 @@ let namespaces = require('./data/namespaces')
 
 // io.on = io.of('/').on
 io.on('connection', socket => {
-  socket.emit('messageFromServer', { data: 'Welcome to the socketio server' })
-  socket.on('messageToServer', dataFromClient => {
-    console.log(dataFromClient)
+  let nsData = namespaces.map((ns) => {
+    return {
+      img: ns.img,
+      endpoint: ns.endpoint
+    }
   })
-  socket.on('newMessageToServer', msg => {
-    // console.log(msg)
-    // io.emit('messageToClients',{text:msg.text})
-    io.of('/').emit('messageToClients', { text: msg.text })
-  })
-  // The server can still communicate across namespaces
-  // but on the clientInformation, the socket needs be in THAT namespace
-  // in order to get the events
-
-  setTimeout(() => {
-    io.of('/admin').emit(
-      'welcome',
-      'Welcome to the admin channel, from the main channel!'
-    )
-  }, 2000)
+  // send it to the client
+  socket.emit('nsLint', nsData)
 })
 
 namespaces.forEach(namespace => {
